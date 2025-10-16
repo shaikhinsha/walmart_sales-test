@@ -57,6 +57,18 @@ This project is an end-to-end data analysis solution designed to extract critica
    - **Business Problem-Solving**: Write and execute complex SQL queries to answer critical business questions, such as:
      - Revenue trends across branches and categories.
      - Identifying best-selling product categories.
+       ```sq
+      SELECT * FROM (
+      SELECT 
+               branch,
+               category,
+               AVG(rating) as avg_rating,
+               RANK() OVER(PARTITION by branch ORDER BY AVG(rating) DESC) as rank
+               FROM walmart 
+                GROUP BY 1,2
+       )
+      WHERE rank=1;
+     ```
      - Sales performance by time, city, and payment method.
      - Analyzing peak sales periods and customer buying patterns.
      - Profit margin analysis by branch and category.
